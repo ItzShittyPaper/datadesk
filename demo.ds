@@ -1,0 +1,43 @@
+40
+80
+/
+1
+2
+|\/| ---- _
+2
+1
+=(--)=_____ \
+3
+1
+c___ (______/
+37
+1
+datadesk 0.73 standard demo file
+38
+1
+meant to be used as a demonstration of mostly everything ds0.73 has to offer.
+5
+1
+/sL
+ int reporterror() {
+
+   mvprintw(0, 4, "                                 ");
+   mvprintw(0, 4, "Syntax error!");
+   endwin();
+   return 1;
+
+ }
+
+ int checktermsize(int req_y, int req_x) {
+
+ 	 int ncurses_max_y;
+ 	 int ncurses_max_x;
+
+ 	 /* check le terminal size */
+	 getmaxyx(stdscr, ncurses_max_y, ncurses_max_x);
+	 if(ncurses_max_x < req_x) { endwin(); printf("Hello, World!"); }
+	 else if(ncurses_max_y < req_y) { endwin(); printf("Bye, World!"); }
+	 else { return 0; }
+
+ }
+/e
