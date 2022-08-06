@@ -22,6 +22,7 @@ int rec_y1;
 int rec_x1;
 int rec_y2;
 int rec_x2;
+int line_length;
 
 char chunk[128];
 int border_y;
@@ -54,20 +55,20 @@ int main(int argc, char *argv[]) {
       default:
         break;
 
-  case -3:
-    sscanf(chunk, "%d", &file_y);
-    break;
-  case -2:
-    sscanf(chunk, "%d", &file_x);
-    break;
-  case -1:
-    if (checktermsize(file_y, file_x) == 1) { fclose(fp); endwin(); return 0; }
-    border_y = file_y;
-    border_x = file_x;
+      case -3:
+        sscanf(chunk, "%d", &file_y);
+        break;
+      case -2:
+        sscanf(chunk, "%d", &file_x);
+        break;
+      case -1:
+        if (checktermsize(file_y, file_x) == 1) { fclose(fp); endwin(); return 0; }
+        border_y = file_y;
+        border_x = file_x;
 
       case 0:
-    line_number = 1;
-    /* read the y coordinate                           */
+        line_number = 1;
+        /* read the y coordinate                           */
         if (ye_rec == NULL) { sscanf(chunk, "%d", &file_y); }
         break;
       case 1:
@@ -82,10 +83,12 @@ int main(int argc, char *argv[]) {
                 ye = strstr(chunk, "L");
         if (ye != NULL) {is_lined = true; }
         break;
-    }
+        }
 
         ye_rec = strstr(chunk, "/r");
         if (ye_rec != NULL) { i = 3; break; }
+        ye = strstr(chunk, "/h");
+        if (ye != NULL) { i = 6; break; }
 
         else { mvprintw(file_y + 1, file_x + 1, chunk); i = -1; break; }
       case 3: /* this is the /s case */
@@ -94,7 +97,7 @@ int main(int argc, char *argv[]) {
         else { i = 2; }
 
         /* print the character / line */
-    if (is_lined == true) { mvprintw(file_y + 1 + i2, file_x + 1, "%d", line_number); line_number++; }
+      if (is_lined == true) { mvprintw(file_y + 1 + i2, file_x + 1, "%d", line_number); line_number++; }
         mvprintw(file_y + 1 + i2, file_x + 1 + 2, chunk);
         i2++;
         break;
@@ -112,8 +115,14 @@ int main(int argc, char *argv[]) {
         rectangle(file_y + 1, file_x + 1, rec_y2 + 1, rec_x2 + 1);
         if (ye_rec != NULL) { i = -1; ye_rec = NULL; break; }
 
+      case 7:
+        sscanf(chunk, "%d", &line_length);
+        mvhline(file_y + 1, file_x + 1, 0, line_length);
+        i = -1;
+        break;
     }
     i++;
+
   }
 
   refresh();
