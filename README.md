@@ -11,7 +11,7 @@ Install the required dependencies:
 4. Gentoo:             `you guys should know what to install by now`
 
 Run `make` and then `sudo make install`
-Whane you update run `sudo make clean` first and then compile the new version.
+When you want to update run `sudo make clean` first and then compile the new version.
 
 ## Usage
 
