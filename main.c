@@ -79,16 +79,18 @@ int main(int argc, char *argv[]) {
         /* these commands check for commands like /s or /r */
         ye = strstr(chunk, "/s");
         if (ye != NULL) {
-        i = 2;
-                ye = strstr(chunk, "L");
+          i = 2;
+          ye = strstr(chunk, "L");
         if (ye != NULL) {is_lined = true; }
-        break;
+          break;
         }
-
         ye_rec = strstr(chunk, "/r");
         if (ye_rec != NULL) { i = 3; break; }
+        /* lines, horizontal and vertical */
         ye = strstr(chunk, "/h");
         if (ye != NULL) { i = 6; break; }
+        ye = strstr(chunk, "/v");
+        if (ye != NULL) { i = 8; break; }
 
         else { mvprintw(file_y + 1, file_x + 1, chunk); i = -1; break; }
       case 3: /* this is the /s case */
@@ -115,9 +117,21 @@ int main(int argc, char *argv[]) {
         rectangle(file_y + 1, file_x + 1, rec_y2 + 1, rec_x2 + 1);
         if (ye_rec != NULL) { i = -1; ye_rec = NULL; break; }
 
+      /* HORIZONTAL LINE DRAWING ROUTINE */
       case 7:
         sscanf(chunk, "%d", &line_length);
         mvhline(file_y + 1, file_x + 1, 0, line_length);
+        break;
+      case 8:
+        i = -1;
+        break;
+
+      /* VERTICAL LINE DRAWING ROUTINE */
+      case 9:
+        sscanf(chunk, "%d", &line_length);
+        mvvline(file_y + 1, file_x + 1, 0, line_length);
+        break;
+      case 10:
         i = -1;
         break;
     }
