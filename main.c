@@ -17,6 +17,7 @@ int file_y;
 int i2 = 0;
 bool is_lined = false;
 int line_number = 1;
+int list_offset = 0;
 
 int rec_y1;
 int rec_x1;
@@ -31,6 +32,7 @@ int border_x;
 char *ye;
 char *ye2;
 char *ye_rec;
+char *ye_list;
 
 /* a state variable. */
 int state = 0;
@@ -91,6 +93,9 @@ int main(int argc, char *argv[]) {
         if (ye != NULL) { i = 6; break; }
         ye = strstr(chunk, "/v");
         if (ye != NULL) { i = 8; break; }
+	ye = strstr(chunk, "/l");
+        if (ye != NULL) { i = 10; break; }
+
 
         else { mvprintw(file_y + 1, file_x + 1, chunk); i = -1; break; }
       case 3: /* this is the /s case */
@@ -134,6 +139,19 @@ int main(int argc, char *argv[]) {
       case 10:
         i = -1;
         break;
+
+      /* LIST DRAWING ROUTINE */
+      case 11:
+	ye_list = strstr(chunk, ">");
+        if (ye_list != NULL) { list_offset++; }
+	ye_list = strstr(chunk, "<");
+        if (ye_list != NULL) { list_offset--; }
+	else { break; }
+      case 12:
+	ye_list = strstr(chunk, "/e");
+        if (ye_list != NULL) { i = -1; break; }
+	else { mvprintw(file_y + 1 + i2, file_x + 1 + list_offset, chunk); }
+	i2++;
     }
     i++;
 
