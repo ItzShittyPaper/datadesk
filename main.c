@@ -69,7 +69,6 @@ int main(int argc, char *argv[]) {
         border_x = file_x;
 
       case 0:
-        line_number = 1;
         /* read the y coordinate                           */
         if (ye_rec == NULL) { sscanf(chunk, "%d", &file_y); }
         break;
@@ -93,7 +92,7 @@ int main(int argc, char *argv[]) {
         if (ye != NULL) { i = 6; break; }
         ye = strstr(chunk, "/v");
         if (ye != NULL) { i = 8; break; }
-	ye = strstr(chunk, "/l");
+        ye = strstr(chunk, "/l");
         if (ye != NULL) { i = 10; break; }
 
 
@@ -142,16 +141,19 @@ int main(int argc, char *argv[]) {
 
       /* LIST DRAWING ROUTINE */
       case 11:
-	ye_list = strstr(chunk, ">");
-        if (ye_list != NULL) { list_offset++; }
-	ye_list = strstr(chunk, "<");
-        if (ye_list != NULL) { list_offset--; }
-	else { break; }
-      case 12:
-	ye_list = strstr(chunk, "/e");
+        ye_list = strstr(chunk, ">");
+        if (ye_list != NULL) { list_offset++; i = 10; break; }
+        ye_list = strstr(chunk, "<");
+        if (ye_list != NULL) { list_offset--; i = 10; break;  }
+        ye_list = strstr(chunk, "/e");
         if (ye_list != NULL) { i = -1; break; }
-	else { mvprintw(file_y + 1 + i2, file_x + 1 + list_offset, chunk); }
-	i2++;
+
+        else {
+          mvprintw(file_y + 1 + i2, file_x + 1 + list_offset, chunk);
+          i = 10;
+          i2++;
+        }
+
     }
     i++;
 
