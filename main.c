@@ -37,11 +37,6 @@ char *ye_rec;
 char *ye_list;
 char *ye_attr;
 
-/* a state variable. */
-int state = 0;
-/* 0 = main menu     */
-/* 1 = project       */
-
 void checkattrs() {
 
   ye = strstr(chunk, "L");
@@ -49,6 +44,13 @@ void checkattrs() {
 
   ye = strstr(chunk, "B");
   if (ye != NULL) {is_bold = true; }
+
+}
+
+void resetattrs() {
+
+  is_lined = false;
+  is_bold  = false;
 
 }
 
@@ -120,12 +122,15 @@ int main(int argc, char *argv[]) {
       case 3:
 
         ye2 = strstr(chunk, "/e");
-        if (ye2 != NULL) { i = -1; break; }
+        if (ye2 != NULL) { i = -1; resetattrs(); break; }
         else { i = 2; }
 
         /* print the character / line */
-      if (is_lined == true) { mvprintw(file_y + 1 + i2, file_x + 1, "%d", line_number); line_number++; }
-        mvprintw(file_y + 1 + i2, file_x + 1 + 2, chunk);
+        if (is_lined == true) { attroff(A_BOLD); /* just in case */
+	  mvprintw(file_y + 1 + i2, file_x - 1, "%d", line_number); line_number++; }
+
+	if (is_bold == true)  { attron(A_BOLD); mvprintw(file_y + 1 + i2, file_x + 1, chunk); line_number++; }
+	mvprintw(file_y + 1 + i2, file_x + 1, chunk);
         i2++;
         break;
 
