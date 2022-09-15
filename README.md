@@ -20,14 +20,20 @@ The datadesk demo file is `/etc/datadesk/demo.ds`, you can open it to see the ne
 
 ## How to use datadesk?
 
-datadesk has 4 main commands:
+datadesk has 7 main commands:
 
 1. /s - writes a sentence to the screen, automatically placing multiple lines until the end of the command (/e).
 2. /r - draws a rectangle on the screen.
 3. /e - ends the /s command (and every command that has a dynamic argument number).
-4. /  - used only once, "/" means the scene root in a datadesk source file.
+4. /v - draws a vertical line.
+5. /h - draws a horizontal line.
+6. /l - makes a list, useful for things like tables of contents or some shit. can make categories and subcategories with '<' and '>'.
+7. /  - used only once, "/" means the scene root in a datadesk source file.
 
-There is also a line numbering argument for /s evoked by the letter "L" like this: `/sL`
+There are also arguments for certain commands like /s:
+
+1. 'B' - makes text bold
+2. 'L' - enables line numbering
 
 The language uses a pass-based syntax in which the return key separates different passes.
 This approach makes writing software with datadesk in mind really easy.
