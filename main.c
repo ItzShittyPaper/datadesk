@@ -15,9 +15,11 @@ FILE *fp;
 int file_x;
 int file_y;
 int i2 = 0;
+
 bool is_lined = false;
 int line_number = 1;
 int list_offset = 0;
+bool is_bold = false;
 
 int rec_y1;
 int rec_x1;
@@ -33,11 +35,22 @@ char *ye;
 char *ye2;
 char *ye_rec;
 char *ye_list;
+char *ye_attr;
 
 /* a state variable. */
 int state = 0;
 /* 0 = main menu     */
 /* 1 = project       */
+
+void checkattrs() {
+
+  ye = strstr(chunk, "L");
+  if (ye != NULL) {is_lined = true; }
+
+  ye = strstr(chunk, "B");
+  if (ye != NULL) {is_bold = true; }
+
+}
 
 int main(int argc, char *argv[]) {
 
@@ -77,27 +90,35 @@ int main(int argc, char *argv[]) {
         sscanf(chunk, "%d", &file_x);
         break;
       case 2:
+
         /* these commands check for commands like /s or /r */
         ye = strstr(chunk, "/s");
         if (ye != NULL) {
+
           i = 2;
-          ye = strstr(chunk, "L");
-        if (ye != NULL) {is_lined = true; }
+          checkattrs();
           break;
+
         }
+
         ye_rec = strstr(chunk, "/r");
         if (ye_rec != NULL) { i = 3; break; }
+
         /* lines, horizontal and vertical */
         ye = strstr(chunk, "/h");
         if (ye != NULL) { i = 6; break; }
+
         ye = strstr(chunk, "/v");
         if (ye != NULL) { i = 8; break; }
+
         ye = strstr(chunk, "/l");
         if (ye != NULL) { i = 10; break; }
 
-
         else { mvprintw(file_y + 1, file_x + 1, chunk); i = -1; break; }
-      case 3: /* this is the /s case */
+
+      /* SENTENCE DRAWING ROUTINE */
+      case 3:
+
         ye2 = strstr(chunk, "/e");
         if (ye2 != NULL) { i = -1; break; }
         else { i = 2; }
@@ -107,7 +128,6 @@ int main(int argc, char *argv[]) {
         mvprintw(file_y + 1 + i2, file_x + 1 + 2, chunk);
         i2++;
         break;
-
 
       /* RECTANGLE DRAWING ROUTINE */
       case 4:
