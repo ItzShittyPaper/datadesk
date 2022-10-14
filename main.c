@@ -1,7 +1,6 @@
 #include "ncurses.h"
 #include "stdlib.h"
 #include "string.h"
-#include "unistd.h"
 
 #include "func.c"
 
@@ -190,6 +189,7 @@ int main(int argc, char *argv[]) {
   /* i kno that goto isn't a good function but it works */
   char bordertext[64];
   sprintf(bordertext, "%d", border_x); strcat(bordertext, "x"); sprintf(wch, "%d", border_y); strcat(bordertext, wch);
+
   state_1_loop:
   rectangle(0, 0, border_y, border_x);
   mvprintw(0, 4, argv[1]);
