@@ -34,6 +34,8 @@ There are also arguments for certain commands like /s:
 
 1. 'B' - makes text bold
 2. 'L' - enables line numbering
+3. 'U' - underlines text
+(you can combine these args AFAIK)
 
 The language uses a pass-based syntax in which the return key separates different passes.
 This approach makes writing software with datadesk in mind really easy.

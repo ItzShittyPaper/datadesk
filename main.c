@@ -15,10 +15,12 @@ int file_x;
 int file_y;
 int i2 = 0;
 
+/* attributes lmao */
 bool is_lined = false;
 int line_number = 1;
 int list_offset = 0;
 bool is_bold = false;
+bool is_underlined = false;
 
 int rec_y1;
 int rec_x1;
@@ -44,12 +46,16 @@ void checkattrs() {
   ye = strstr(chunk, "B");
   if (ye != NULL) {is_bold = true; }
 
+  ye = strstr(chunk, "U");
+  if (ye != NULL) {is_underlined = true; }
+
 }
 
 void resetattrs() {
 
   is_lined = false;
   is_bold  = false;
+  is_underlined = false;
 
 }
 
@@ -125,11 +131,18 @@ int main(int argc, char *argv[]) {
         else { i = 2; }
 
         /* print the character / line */
-        if (is_lined == true) { attroff(A_BOLD); /* just in case */
+        if (is_lined == true) {
 	  mvprintw(file_y + 1 + i2, file_x - 1, "%d", line_number); line_number++; }
 
 	if (is_bold == true)  { attron(A_BOLD); mvprintw(file_y + 1 + i2, file_x + 1, chunk); line_number++; }
-	mvprintw(file_y + 1 + i2, file_x + 1, chunk);
+  	  mvprintw(file_y + 1 + i2, file_x + 1, chunk);
+
+	if (is_underlined == true)  { attron(A_UNDERLINE); mvprintw(file_y + 1 + i2, file_x + 1, chunk); line_number++; }
+  	  mvprintw(file_y + 1 + i2, file_x + 1, chunk);
+
+	attroff(A_BOLD);
+	attroff(A_UNDERLINE);
+
         i2++;
         break;
 
