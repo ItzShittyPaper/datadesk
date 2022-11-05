@@ -1,4 +1,3 @@
-#include "ncurses.h"
 #include "stdlib.h"
 #include "string.h"
 
@@ -22,6 +21,9 @@ int list_offset = 0;
 bool is_bold = false;
 bool is_underlined = false;
 
+/* other boolean stuff */
+bool is_comment_check = false;
+
 int rec_y1;
 int rec_x1;
 int rec_y2;
@@ -37,6 +39,16 @@ char *ye2;
 char *ye_rec;
 char *ye_list;
 char *ye_attr;
+
+void commentcheck() {
+
+  ye = strstr(chunk, "/*");
+  if (ye != NULL) { is_comment_check = true; }
+
+  ye = strstr(chunk, "*/");
+  if (ye != NULL && is_comment_check == true) { is_comment_check = false; i--; }
+
+}
 
 void checkattrs() {
 
@@ -70,6 +82,8 @@ int main(int argc, char *argv[]) {
 
   /* parsing the .ds file */
   while(fgets(chunk, sizeof(chunk), fp) != NULL) {
+
+    commentcheck();
 
     /* this is the parse routine */
     switch(i) {
