@@ -50,4 +50,4 @@ The y coordinate is specified first because ncurses works the same way.
 Even if it feels weird at first, it is really simple in the long run.
 This decision makes sense because when talking people first specify the row (y), and then the column (x).
 
-more info on my blog https://zesrajsie.tk/blog/blog6.html
+more info on my blog https://makulaturka.tk/datadesk/
