@@ -1,4 +1,6 @@
-# datadesk
+# DEAD PROJECT
+it's a dead project now, i just moved on from programming
+
 the datadesk document format, includes the text-based DRAWER reference interpreter and the datadesk API.
 it is an interpreted markup language that bridges the gap between images and text files.
 
